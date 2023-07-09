@@ -1,4 +1,4 @@
-const frame = new Frame("fit", 800, 600);
+const frame = new Frame("fit", window.innerWidth, window.innerHeight);
 frame.on("ready", ()=>{ // ES6 Arrow Function - similar to function(){}
     zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
 
