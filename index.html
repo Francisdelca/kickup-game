@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <div class="go_to_ranking" id="ranking">
+        Has click aquí para ver el ranking
+        <img src="./img/arrow_up.png" alt="">
+    </div>
+    <div class="final_score" id="finalScore">
+        <h1>GAME OVER</h1>
+        <h3>Hiciste: <span id="score"></span> Puntos</h3>
+        <p>Haz click para volver a intentar</p>
+    </div>
+    <div class="start" id="start">
+        <p>Haz click para emezar</p>
+    </div>
     <script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
     <script src="https://d309knd7es5f10.cloudfront.net/zim_7.0.1.js"></script>
     <script src="https://d309knd7es5f10.cloudfront.net/codepen/icon.js"></script>
     <script src="https://d309knd7es5f10.cloudfront.net/Box2dWeb-2.1.a.3.min.js"></script>
     <script src="https://d309knd7es5f10.cloudfront.net/physics_1.0.js"></script>
     <script src="https://d309knd7es5f10.cloudfront.net/game_1.0.4.js"></script>
-    <script src="./index.js"></script>
+    <script src="./index.js" type="module"></script>
 </body>
 </html>

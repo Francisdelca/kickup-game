@@ -1,4 +1,39 @@
 const frame = new Frame("fit", window.innerWidth, window.innerHeight);
+const ranking = document.getElementById("ranking");
+const scoreCont = document.getElementById("finalScore");
+const scoreText = document.getElementById("score");
+const start = document.getElementById("start");
+
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+function actualizarPuntaje(score) {
+	const uid = getParameterByName('userId'); // Reemplaza con el UID del usuario que deseas actualizar
+	const puntaje = score; // Reemplaza con el puntaje que deseas asignar
+
+	fetch('https://updatescore-fdvoqfdgdq-uc.a.run.app', {
+	  method: 'POST',
+	  mode: 'cors',
+	  headers: {
+		'Content-Type': 'application/json',
+	  },
+	  body: JSON.stringify({ uid, puntaje }),
+	})
+	  .then(response => response.json())
+	  .then(data => {
+		console.log(data.message); // Mensaje de éxito de la función de Firebase
+	  })
+	  .catch(error => {
+		console.error('Error al llamar a la función de Firebase:', error);
+	  });
+  }
+
 frame.on("ready", ()=>{ // ES6 Arrow Function - similar to function(){}
     zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
 
@@ -94,9 +129,13 @@ frame.on("ready", ()=>{ // ES6 Arrow Function - similar to function(){}
 						countryLabel.text = "GAME OVER";		
 						countryLabel.scaleTo(stage, 95, 70, "both");
 						timeout(1000, ()=>{
-							board.score(score);
+							// board.score(score);
 							boardBacking.addTo();
-							board.addTo();
+							ranking.style.display = "block";
+							scoreCont.style.display = "flex";
+							scoreText.innerText = score;
+							actualizarPuntaje(score);
+							// board.addTo();
 						});						
 					}
 				}
@@ -130,8 +169,11 @@ frame.on("ready", ()=>{ // ES6 Arrow Function - similar to function(){}
 			const boardBacking = new Rectangle(stageW, stageH, frame.white).alp(.8).addTo(stage);
 			boardBacking.on("mousedown", ()=>{
 				// this starts or restarts the game
-				board.removeFrom();
-				boardBacking.removeFrom();				
+				// board.removeFrom();
+				boardBacking.removeFrom();
+				ranking.style.display = "none";		
+				scoreCont.style.display = "none";	
+				start.style.display = "none";	
 				ball.off("mousedown", ballEvent); // remove the ballEvent as we will add it again below
 				ballEvent = ball.on("mousedown", ballEvent);
 				// add the first press event to start the game
@@ -144,12 +186,12 @@ frame.on("ready", ()=>{ // ES6 Arrow Function - similar to function(){}
 				scoreLabel.text = score = 0;
 			});
 			// LeaderBoard - see the game module (js file) and http://zimjs.com/leaderboard
-			const board = new zim.LeaderBoard({
-				title:"SOCCER UP",
-				data:"X233C92Q"
-			})
-				.siz(null,stageH*.8)
-				.center();
+			// const board = new zim.LeaderBoard({
+			// 	title:"SOCCER UP",
+			// 	data:"X233C92Q"
+			// })
+			// 	.siz(null,stageH*.8)
+			// 	.center();
 						
 			// physics.debug(); // makes it so you can see physics bodies			
 			
